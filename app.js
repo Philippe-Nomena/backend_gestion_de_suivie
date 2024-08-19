@@ -53,7 +53,7 @@ https
     // sslOptions,
     app
   )
-  .listen(process.env.APP_PORT, () => {
+  .listen(process.env.APP_PORT, '0.0.0.0', () => {
     console.log("======================================");
     console.log(
       "  Serveur HTTPS avec succès sur le port",
