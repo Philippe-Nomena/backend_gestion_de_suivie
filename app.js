@@ -48,26 +48,38 @@ app.use("/sqlite_test", Sqlite_test);
 app.use("/presence", PresenceRoute);
 
 // Create an HTTPS server
-https
-  .createServer(
-    // sslOptions,
-    app
-  )
-  .listen(process.env.APP_PORT, '0.0.0.0', () => {
+// https
+//   .createServer(
+//     // sslOptions,
+//     app
+//   )
+//   .listen(process.env.APP_PORT, () => {
+//     console.log("======================================");
+//     console.log(
+//       "  Serveur HTTPS avec succès sur le port",
+//       process.env.APP_PORT
+//     );
+//     console.log("======================================");
+//   });
+
+// // Redirect HTTP to HTTPS
+// http
+//   .createServer((req, res) => {
+//     res.writeHead(301, {
+//       Location: "https://" + req.headers["host"] + req.url,
+//     });
+//     res.end();
+//   })
+//   .listen(80);
+
+const port = process.env.APP_PORT || 8080; // Utilise un port au-dessus de 1024
+
+http.createServer(app)
+  .on('error', (err) => {
+    console.error('Erreur HTTP :', err);
+  })
+  .listen(port, () => {
     console.log("======================================");
-    console.log(
-      "  Serveur HTTPS avec succès sur le port",
-      process.env.APP_PORT
-    );
+    console.log("  Serveur HTTP avec succès sur le port", port);
     console.log("======================================");
   });
-
-// Redirect HTTP to HTTPS
-http
-  .createServer((req, res) => {
-    res.writeHead(301, {
-      Location: "https://" + req.headers["host"] + req.url,
-    });
-    res.end();
-  })
-  .listen(80);
