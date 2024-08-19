@@ -18,10 +18,10 @@ const PresenceRoute = require("./routes/presenceRoute");
 const app = express();
 
 // Load SSL key and certificate for the protocol https
-const sslOptions = {
-  key: fs.readFileSync("key.pem"),
-  cert: fs.readFileSync("cert.pem"),
-};
+// const sslOptions = {
+//   key: fs.readFileSync("key.pem"),
+//   cert: fs.readFileSync("cert.pem"),
+// };
 
 // Middlewares
 app.use((req, res, next) => {
@@ -48,11 +48,19 @@ app.use("/sqlite_test", Sqlite_test);
 app.use("/presence", PresenceRoute);
 
 // Create an HTTPS server
-https.createServer(sslOptions, app).listen(process.env.APP_PORT, () => {
-  console.log("======================================");
-  console.log("  Serveur HTTPS avec succès sur le port", process.env.APP_PORT);
-  console.log("======================================");
-});
+https
+  .createServer(
+    // sslOptions,
+    app
+  )
+  .listen(process.env.APP_PORT, () => {
+    console.log("======================================");
+    console.log(
+      "  Serveur HTTPS avec succès sur le port",
+      process.env.APP_PORT
+    );
+    console.log("======================================");
+  });
 
 // Redirect HTTP to HTTPS
 http
