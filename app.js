@@ -78,7 +78,7 @@ http.createServer(app)
   .on('error', (err) => {
     console.error('Erreur HTTP :', err);
   })
-  .listen(port, () => {
+  .listen(port, '0.0.0.0', () => {
     console.log("======================================");
     console.log("  Serveur HTTP avec succès sur le port", port);
     console.log("======================================");
